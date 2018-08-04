@@ -1,6 +1,6 @@
 class ArticlesController < ApplicationController
 
-before_action :set_article, only: [:create, :edit, :destroy, :show]
+before_action :set_article, only: [ :edit, :destroy, :show, :update]
 
 def index
 	@articles = Article.all
@@ -12,7 +12,7 @@ end
 
 def create
 	# render plain: params[:article].inspect
-
+	@article = Article.new(article_params)
 	if @article.save
 	@article.save
 		flash[:notice] = "Article was successfully saved"
@@ -33,7 +33,6 @@ def destroy
 end
 
 def update
-	@article = Article.find(params[:id])
 	if @article.update(article_params)
 		flash[:notice] = "Article update successful"
 		redirect_to article_path(@article)
